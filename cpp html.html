@@ -1,0 +1,212 @@
+<h2 id="tabel-of-content">Tabel Of Content</h2>
+<ul>
+<li><a href="#I/D">Increment and decrement operators</a></li>
+<li><a href="#pointers">Pointer Declaratrion And Assigning</a></li>
+<li><a href="#The-memory-model">The memory Model</a></li>
+<li><a href="#pointers-applications">Pointers Applications in C++</a></li>
+<li><a href="#pointersandarrays">Pointers And Arrays</a>
+<ul>
+<li><a href="#array-name-used-as-a-pointer">Array name used as a pointer</a></li>
+<li><a href="#array-pass-to-function">Passing Arrays to Functions</a></li>
+</ul></li>
+<li><a href="#pass-arg">Passing Arguments To Function</a></li>
+<li><a href="#pass-v">Pass by value</a></li>
+<li><a href="#pass-p">Pass by pointer</a></li>
+<li><a href="#pass-r">Pass by reference</a></li>
+<li><a href="#pass-pr">Pass by pointer reference</a></li>
+</ul>
+<h1 id="increment-and-decrement-operators">Increment and decrement operators <a name="I/D"></a></h1>
+<p>the increment operator ++ increases the value of a variable by 1. Similarly, the decrement operator -- decreases the value of a variable by 1. They can be used as prefix or postfix. * <a href="#sub-heading-1">Example:</a></p>
+<p><code>c++ int a = 3; a++ // a increases by one, so a = 4 a-- // a decreases by one, so a = 3 };</code></p>
+<ul>
+<li><p><a href="#sub-heading-1">diffrence between prefix and postfix</a></p></li>
+<li><p>if we use ++ as a prefix (++a), the value of a is incremented by 1 then used.</p></li>
+<li><p>if we use ++ as a postfix (a++), the value of a is used first then incremented by 1.</p></li>
+<li>The same goes for decrement operator (--)</li>
+<li><p><a href="#sub-heading-1">Example:</a></p></li>
+</ul>
+<p>```c++ #include <iostream></p>
+<p>using namespace std;</p>
+<p>int main() { int var1 = 5, var2 = 5;</p>
+<p>// var1 is displayed // Then, var1 is increased to 6. cout &lt;&lt; var1++ &lt;&lt; endl;</p>
+<p>// var2 is increased to 6 // Then, it is displayed. cout &lt;&lt; ++var2 &lt;&lt; endl;</p>
+<p>return 0; } }; ``` * <a href="#sub-heading-1">Try to solve Example:</a></p>
+<p>```c++ #include <iostream></p>
+<p>using namespace std;</p>
+<p>int func(int a,int b,int c){ int sum = ++a + b-- - c; return sum;</p>
+<p>} int main() { int x = 5, y =3;</p>
+<p>int sum = (x++) + y + x; // sum = ? cout&lt;<x<<endl; // value of x printed on screen = ?
+
+   int sum_2 = (++y) + x; // sum_2 = ? 
+   cout<<y<<endl; //value of y printed on screen = ?
+
+   cout<<y--<<endl; // value of y printed on screen = ?
+   cout<<y<<endl; // value of y printed on screen = ?
+
+int k = 10; int l =5; int m = 2;
+int result = func(k++,--l,m);
+
+cout<<result<<endl; // value of result printed on the screen ?
+
+   return 0;
+}
+};
+```
+
+# Pointers <a name="pointers"></a></p>
+<blockquote>
+<p>Pointers are variables that store the memory addresses of other variables. For any <code>variable</code> we can have its address by <code>&amp;variable</code>.</p>
+</blockquote>
+<p>```c++ #include <iostream> using namespace std;</p>
+<p>int main() { // declare variable int var1 = 3; int var2 = 5;</p>
+<pre><code>// print address of var1
+cout &lt;&lt; &quot;Address of var1: &quot;&lt;&lt; &amp;var1 &lt;&lt; endl;
+/ print address of var2
+cout &lt;&lt; &quot;Address of var2: &quot;&lt;&lt; &amp;var2 &lt;&lt; endl;</code></pre>
+<p>} ``<code>You will see an output that begin with</code>0x<code>which indicate the address of the variable in the memory.  **notice:**</code>int` variable has a size of 4 byte in a 64-bit operating system.</p>
+<h2 id="pointer-declaratrion-and-assigning">Pointer Declaratrion And Assigning</h2>
+<p>```c++ // pointer declaration int* ptr; // or int *ptr</p>
+<p>// assigning address to pointer int* ptr; int var; var = 10; ptr = &amp;var;</p>
+<p>//accessing the value of the ptr (also called dereferencing) cout&lt;&lt;&quot;ptr:&quot;&lt;<ptr<<"   address of var: "<<&var<<endl;
+cout<< "(*ptr):" <<*ptr << endl;   // output: 10
+
+//changing value pointed by the pointer
+*ptr = 5;
+cout << "var:"<< var << endl;      // output: 5
+```
+**notice:** 
+* we used `*` after the data type to declare a pointer.
+* `var` is not a pointer.
+* we stored `var` address into `ptr`.
+* we used `*` **dereference operator** to print the value stored in this address.
+* we can change the `var` content by working with pointers. 
+
+> <em>note</em> <code>*ptr</code> has a value and <code>&amp;var</code> is an address so we cannot write <code>*ptr = &amp;var</code>.</p>
+<blockquote>
+<p><code>ptr</code> is an address and <code>var</code> has a value so we cannot write <code>ptr = var</code> ___</p>
+</blockquote>
+<h1 id="the-memory-model">The memory model</h1>
+<blockquote>
+<p>everything in our program is stored in the memory of our machine. lets have a peak on what happens on the memory when we try to declare a variable.</p>
+</blockquote>
+<div class="figure">
+<img src="Memorypeak.png" title="inside the memory" alt="alt text" /><p class="caption">alt text</p>
+</div>
+<blockquote>
+<p>the memory in the machine can be devided into 2 places called the <code>stack</code> and the <code>heap</code>, each of them has its advantages and disadvantages. lets dive into some details. <img src="HeapAndStack.png" title="Heap and stack" alt="alt text" /></p>
+</blockquote>
+<h2 id="the-stack">The stack</h2>
+<blockquote>
+<p>so far, all the variables we declared was stored ( allocated) on this part of the memory. ```c++ int x =5; bool y = true; // these are allocated on the stack</p>
+</blockquote>
+<p>``<code>&gt; the stack also stores functions. whenever we make a function call, a space on the stack is allocated for this function, this space is called a stack frame.  the stack stores these functions in a</code>LIFO<code>manner (Last in first out), so if we call a function , then call another function inside it, the latter gets executed when it's called, and when it's done, the stack continues the first function.  ![alt text](LIFO.png &quot;Lifo structure of the stack&quot;) ### Advantages and disadvantages of stack: &gt; the stack has</code>automatic<code>memory managment, which means it automatically deletes variables when they go out of scope, so,  A programmer does not have to worry about memory allocation and deallocation of stack variables. additionally, The allocation happens on</code>contiguous<code>blocks of memory, which makes the access time</code>faster<code>.  ___ &gt;disadvantages of stack is that its memory is</code>limited<code>. and we</code>can not change the size of an array<code>that is on the stack while the program is</code>running`.</p>
+<h2 id="the-heap">The heap</h2>
+<blockquote>
+<p>the heap (also called the free store) is a part of the memory accessible only using pointers. to allocate memory on the heap we use the <code>new</code> operator. ### Advantages and disadvantages of heap: advantages: the heap can offer <code>more memory</code> than the stack. we <code>can specify the size of arrays</code> on the heap while the program is <code>running</code>. --- disadvantages: the heap memory allocation must be done <code>manually</code>, which may cause memory leaks. the allocation happens <code>randomly</code> in any place of the heap.</p>
+</blockquote>
+<div class="figure">
+<img src="HvS.png" title="Heap vs stack" alt="alt text" /><p class="caption">alt text</p>
+</div>
+<h2 id="pointers-applications-in-c">Pointers Applications in C++ <a name="pointers-applications"></a></h2>
+<ol style="list-style-type: decimal">
+<li>### dynamic memory allocation pointers are the only way we can allocate memory on the heap (the free store). we can do this using the <code>new</code> operator.</li>
+</ol>
+<p>```c++ #include <iostream> using namespace std;</p>
+<p>int main() { //example 1 int *int_ptr = nullptr; cout&lt;<int_ptr<<endl;
+   int_ptr = new int (5);
+   cout<<int_ptr<<endl;
+   cout<<*int_ptr<<endl;
+
+  delete int_ptr; // what is the delete operator?
+
+  //example 2
+  double * ptrToArray = new double [15];
+  //manipulate the values stored in the array the pointer is pointing to:
+
+   ptrToArray[0]=6;
+   ptrToArray[1]=8;
+
+  cout<<*ptrToArray<<endl;
+  cout<<*(ptrToArray+1)<<endl;
+  cout<<ptrToArray[1]<<endl;
+  cout<<ptrToArray[9]<<endl;
+
+  delete [] ptrToArray;
+// number of delete must be = number of new.
+} 
+```
+
+
+
+
+1.  Passing arguments by reference to modify variable of function in other(e.g. swap two variables)\
+or  For efficiency purpose (passing large structure without reference would create a copy of the structure which will waste storage)
+
+```c++
+#include <iostream> using namespace std;</p>
+<p>void swap(int* x, int* y) { int temp = <em>x; </em>x = <em>y; </em>y = temp; }</p>
+<p>int main() { int x = 10, y = 20; swap(&amp;x, &amp;y); cout &lt;&lt; x &lt;&lt; &quot; &quot; &lt;&lt; y &lt;&lt; endl; return 0; } ``` 2. Accessing array elements. Compiler internally uses pointers to access array elements. 3. To return multiple values (e.g. returning square and square root of numbers or returning an array) 4. Dynamic memory allocation : We can use pointers to dynamically allocate memory. The advantage of dynamically allocated memory is, it is not deleted until we explicitly delete it.</p>
+<blockquote>
+<p>There are a lot of other applications for pointers, but we will not cover it in this course.</p>
+</blockquote>
+<p>```c++ // C++ program to dynamically allocate an array of given size. #include <iostream> using namespace std;</p>
+<p>int* createArr(int n) { return new int[n]; }</p>
+<p>int main() { int* pt = createArr(10); return 0; } ```</p>
+<h2 id="pointers-and-arrays">Pointers And Arrays <a name="pointersandarrays"></a></h2>
+<p>Pointers can store address of cells of an array. Array is a static pointer. <code>c++ int *ptr; int arr[4] = {1, 2, 3, 4};  // address of the first element of the array is stored in the pointer ptr ptr = arr;  // or ptr = &amp;arr[0];</code> Here the pointer points to the address of the first element of the array.</p>
+<p><strong>Navigation through the array using pointers</strong> ```c++ int *ptr; int arr[4] = {1, 2, 3, 4}; ptr = arr; // printing address of array elements using pointers for (int i = 0; i &lt; 4; ++i) { cout&lt;&lt; &quot;ptr + &quot; &lt;&lt; i &lt;&lt; &quot;=&quot; &lt;&lt; ptr + i &lt;&lt; endl; //printing address of array elements // cout&lt;&lt; &quot;&amp;arr[&quot; &lt;&lt; i &lt;&lt; &quot;] = &quot; &lt;&lt; &amp;arr[i] &lt;&lt; endl; }</p>
+<p>// printing values of array elements using pointers for (int i = 0; i &lt; 4; ++i) { cout&lt;&lt; &quot;<em>(ptr + &quot; &lt;&lt; i &lt;&lt; &quot; ) =&quot; &lt;&lt; </em>(ptr + i) &lt;&lt; endl; //printing values of array elements // cout&lt;&lt; &quot;arr[&quot; &lt;&lt; i &lt;&lt; &quot;] = &quot; &lt;&lt; arr[i] &lt;&lt; endl; }</p>
+<p>cout &lt;&lt; arr &lt;&lt; endl; cout &lt;&lt; arr +1 &lt;&lt; endl; cout &lt;&lt; <em>arr &lt;&lt; endl; cout &lt;&lt; </em>arr+1 &lt;&lt; endl; cout &lt;&lt; *(arr+1) &lt;&lt; endl;</p>
+<p>```</p>
+<blockquote>
+<p>If we initialize <code>ptr  = &amp;arr[1]</code> we will have</p>
+<p>ptr - 1 is same as &amp;arr[0]</p>
+<p>ptr + 1 is same as &amp;arr[2]</p>
+<p>ptr + 2 is same as &amp;arr[3]</p>
+</blockquote>
+<h2 id="array-name-used-as-a-pointer">Array name used as a pointer <a name="array-name-used-as-a-pointer"></a></h2>
+<p>```c++ #include <iostream> using namespace std;</p>
+<p>int main() { int arr[5];</p>
+<p>// Insert data using pointer notation cout &lt;&lt; &quot;Enter 5 numbers: &quot;; for (int i = 0; i &lt; 5; ++i) { // store input number in arr[i] cin &gt;&gt; *(arr + i) ; }</p>
+<pre><code>// printing data using pointer notation
+cout &lt;&lt; &quot;Array elements: &quot; &lt;&lt; endl;
+for (int i = 0; i &lt; 5; ++i) 
+{
+    // print value of arr[i] 
+    cout &lt;&lt; *(arr + i) &lt;&lt; endl ; 
+    // *(arr++) will give an error as it mean changing the array address which is the first element 
+    // *(ptr++)  is normal operation 
+    
+}
+return 0;</code></pre>
+<p>} <code>**notice** we did not declare a pointer, but instead we used the array name for the pointer notation.\ To see what is wrong with arr++ we use a simplified example:</code>c++ int a = 0; cout &lt;&lt; a+1 &lt;&lt; endl; // output: 1 but a is still holding value of 0 in the memory cout &lt;&lt; a++ &lt;&lt; endl; // output: 1 but a now hold a value 1 in the memory<br />```</p>
+<h2 id="passing-array-to-function">Passing Array to Function <a name="array-pass-to-function"></a></h2>
+<p>C++ does not allow to pass an entire array as an argument to a function. However, You can pass a pointer to an array by specifying the array's name without an index.<br />If you want to pass a single-dimension array as an argument in a function, you would have to declare the function in one of following three ways and all three declaration methods produce similar results because each tells the compiler that an <strong>integer pointer</strong> is going to be received. &gt; void Fun(int *arr) { ..... } // as a pointer</p>
+<blockquote>
+<p>void Fun(int arr[10]) { ..... } // as sized array</p>
+</blockquote>
+<blockquote>
+<p>void Fun(int arr[]) { ..... } // as unsized array</p>
+</blockquote>
+<p>```c++ #include <iostream> using namespace std;</p>
+<p>double getAverage(int arr[], int size) { int i, sum = 0;<br /> double avg;</p>
+<p>for (i = 0; i &lt; size; ++i) { sum += arr[i]; } avg = double(sum) / size;</p>
+<p>return avg; }</p>
+<p>int main () { // an int array with 5 elements. int balance[5] = {1000, 2, 3, 17, 50}; double avg;</p>
+<p>// pass pointer to the array as an argument. avg = getAverage( balance, 5 ) ;</p>
+<p>// output the returned value cout &lt;&lt; &quot;Average value is: &quot; &lt;&lt; avg &lt;&lt; endl;</p>
+<p>return 0; } ``` ## Passing Arguments To Function <a name="pass-arg"></a></p>
+<p>We can pass actual value to the function, pass the address of the value, or passing a reference to the function. Each has a different methadology and application. <code>c++ int var1 = 5; int var2 = 10 int *ptr; ptr = &amp;var1;   // pointer has the address of var1 int &amp;ref = var1;  // now var1 and ref has the same address  ptr = &amp;var2;  // pointer addres can follow each variable it is assigned to, but refrence are assigned to  one variable only</code></p>
+<h3 id="pass-by-value">Pass by value <a name="pass-v"></a></h3>
+<p>We pass a copy of the value when we did not want to change the actual value of the variable ```c++ void passByVal(int val) { val = 10; cout&lt;&lt; &quot;val = &quot; &lt;&lt; val; } int main() { int x = 5; cout&lt;&lt; &quot;x = &quot;&lt;&lt; x &lt;&lt; endl; //5 passByVal(x); cout&lt;&lt; &quot;x = &quot;&lt;&lt; x &lt;&lt; endl; //5</p>
+<p>} ```</p>
+<h3 id="pass-by-pointer">Pass by pointer <a name="pass-p"></a></h3>
+<p>we are passing the address of the variable. ```c++ void passByPtr(int <em>ptr) { </em>ptr = 20; cout&lt;&lt; &quot;<em>ptr = &quot; &lt;&lt; </em>ptr; int main() { int x = 5; cout&lt;&lt; &quot;x = &quot;&lt;&lt; x &lt;&lt; endl; //5 passByPtr(&amp;x); //20 cout&lt;&lt; &quot;x = &quot;&lt;&lt; x &lt;&lt; endl; //20</p>
+<p>} ```</p>
+<h3 id="pass-by-reference">Pass by reference <a name="pass-r"></a></h3>
+<p>we pass the actual value of the variable.<br /><strong>pass by refrence VS pass by pointer</strong><br />References are usually preferred over pointers whenever we don’t need “reseating”.<br /><strong>Use references when you can, and pointers when you have to.</strong><br />A refrence is same object with a different name. Reference must refere to an object and cannot be NULL so it is safer to use. * pointers can be re-assigned, reference cannot. * pointers can be null(<strong>a constant with a value of zero</strong> ). It is a good practice to initiallize a pointer as null. * pointers can iterate over an array. * pointer is a variable that hold memory address, reference has the same memory as the object . * pointers need to be dereferenced to acces the memory while the reference can be used directly.</p>
+<p>```c++ void passByRef(int &amp;ref) { ref = 30; cout&lt;&lt; &quot;ref = &quot; &lt;&lt; ref; } int main() { int x = 5; cout&lt;&lt; &quot;x = &quot;&lt;&lt; x &lt;&lt; endl; //5 passByRef(x); //30 cout&lt;&lt; &quot;x = &quot;&lt;&lt; x &lt;&lt; endl; //30</p>
+<p>} <code>&lt;!-- ### Pass by  pointer reference &lt;a name=&quot;pass-pr&quot;&gt;&lt;/a&gt; we are making a reference to the pointer. Thus we want to modify the pointer without modifying the object that the pointer is pointing to.</code>c++ int n1 = 1; int n2 = 2; int* p2; void passByPtr(int <em>ptr); void passByPtrRef(int </em>&amp;ptrRef); int main(){ int* p1 = &amp;n1; p2 = &amp;n2; passByPtr(&amp;n1); passByPtrRef(p1); return 0; } void passByPtr(int <em>p1) { </em>ptr= 3; ptr= p2; *ptr = 4; cout&lt;&lt; &quot;pass by pointer&quot;&lt;&lt; endl; }</p>
+<p>void passByPtrRef(int <em>&amp;ptrRef) { </em>ptrRef = 5; ptrRef = p2; *ptrRef = 6; cout&lt;&lt; &quot;pass by pointer reference&quot;&lt;&lt; endl; } ``` here --&gt;</p>
+<h3 id="about">About</h3>
+<p>This session is prepared and managed by <strong>Mohamed Ahmed Abdelaziz</strong> and <strong>Ammar Elsaied</strong>.<br />Having trouble with Pages? Contact Us <a href="Mohamed.ahmed997@eng-st.cu.edu.eg">Mohamed.ahmed997@eng-st.cu.edu.eg</a> <a href="Mohamed.ahmed997@eng-st.cu.edu.eg">Mohamed.ahmed997@eng-st.cu.edu.eg</a> and We will help you sort it out.</p>
